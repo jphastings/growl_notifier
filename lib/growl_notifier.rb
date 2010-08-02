@@ -2,8 +2,6 @@ require 'osx/cocoa'
 
 module Growl
   class Notifier < OSX::NSObject
-    VERSION = '1.0.2'
-    
     GROWL_IS_READY = "Lend Me Some Sugar; I Am Your Neighbor!"
     GROWL_NOTIFICATION_CLICKED = "GrowlClicked!"
     GROWL_NOTIFICATION_TIMED_OUT = "GrowlTimedOut!"
