@@ -1,6 +1,49 @@
 require 'osx/cocoa'
 
 module Growl
+  class Logger
+    attr_accessor :level
+    
+    LEVELS = [:debug,:info,:warn,:error,:fatal]
+    
+    def initialize(app_name = "#{__FILE__} logger", default_notifications = nil, application_icon = nil)
+      # Check to see if Growl is available?
+      @log = Notifier.sharedInstance
+      @log.register(app_name,LEVELS.collect{|w| w.to_s.capitalize},default_notifications, application_icon)
+      @level = :info
+    end
+    
+    def level=(level)
+      @level = parse_level(level)
+    end
+    
+    def fatal(message,title=nil); log(:fatal,message,title); end
+    def error(message,title=nil); log(:error,message,title); end
+    def warn(message,title=nil);  log(:warn,message,title);  end
+    def info(message,title=nil);  log(:info,message,title);  end
+    def debug(message,title=nil); log(:debug,message,title); end
+
+    def log(level,message,title=nil)
+      level = parse_level(level)
+      if LEVELS.index(@level) <= LEVELS.index(level)
+        title ||= level.to_s.capitalize
+        @log.notify(level.to_s.capitalize, title, message)
+      end
+    end
+    
+    private
+    def parse_level(level)
+      case level
+      when Symbol,String
+        (LEVELS.include? level.to_sym) ? level.to_sym : :info
+      when 0..5
+        LEVELS[level]
+      else
+        raise ArgumentError, "Please use Symbols (see Growl::Logger::LEVELS) or Logger Constants (eg. Logger::WARN)"
+      end
+    end
+  end
+  
   class Notifier < OSX::NSObject
     GROWL_IS_READY = "Lend Me Some Sugar; I Am Your Neighbor!"
     GROWL_NOTIFICATION_CLICKED = "GrowlClicked!"
