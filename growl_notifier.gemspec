@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{growl_notifier}
-  s.version = "1.1.0"
+  s.version = "1.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Satoshi Nakagawa", "Eloy Duran", "JP Hastings-Spital"]
@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.email = ["psychs@limechat.net", "e.duran@superalloy.nl", "jphastings@gmail.com"]
   s.extra_rdoc_files = [
     "LICENSE",
-     "README.txt",
+     "README.rdoc",
      "TODO"
   ]
   s.files = [
@@ -22,11 +22,11 @@ Gem::Specification.new do |s|
      "History.txt",
      "LICENSE",
      "Manifest.txt",
-     "README.txt",
+     "README.rdoc",
      "Rakefile",
      "TODO",
      "VERSION",
-     "init.rb",
+     "growl_notifier.gemspec",
      "lib/growl_notifier.rb"
   ]
   s.homepage = %q{http://github.com/jphastings/growl_notifier}
