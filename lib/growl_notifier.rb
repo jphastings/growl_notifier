@@ -27,7 +27,7 @@ module Growl
       level = parse_level(level)
       if LEVELS.index(@level) <= LEVELS.index(level)
         title ||= level.to_s.capitalize
-        @log.notify(level.to_s.capitalize, title, message)
+        @log.notify(level.to_s.capitalize, title, message,:priority => LEVELS.index(level) - 2)
       end
     end
     
@@ -36,7 +36,7 @@ module Growl
       case level
       when Symbol,String
         (LEVELS.include? level.to_sym) ? level.to_sym : :info
-      when 0..5
+      when 0..4
         LEVELS[level]
       else
         raise ArgumentError, "Please use Symbols (see Growl::Logger::LEVELS) or Logger Constants (eg. Logger::WARN)"
@@ -88,10 +88,12 @@ module Growl
     #
     # Register the applications name, the notifications plus the default notifications that will be used and the icon that's to be used in the Growl notifications.
     #
-    #   Growl::Notifier.sharedInstance.register 'FoodApp', ['YourHamburgerIsReady', 'OhSomeoneElseAteIt'], ['DefaultNotification], OSX::NSImage.imageNamed('GreasyHamburger')
+    #   Growl::Notifier.sharedInstance.register 'FoodApp', ['YourHamburgerIsReady', 'OhSomeoneElseAteIt'], ['DefaultNotification'], 'GreasyHamburger.png')
     def register(application_name, notifications, default_notifications = nil, application_icon = nil)
-      @application_name, @application_icon = application_name, (application_icon || OSX::NSApplication.sharedApplication.applicationIconImage)
-      @notifications, @default_notifications = notifications, (default_notifications || notifications)
+      @application_name      = application_name
+      @application_icon      = OSX::NSImage.alloc.initWithContentsOfFile(application_icon) || OSX::NSApplication.sharedApplication.applicationIconImage
+      @notifications         = notifications
+      @default_notifications = default_notifications || notifications
       @callbacks = {}
       send_registration!
     end
