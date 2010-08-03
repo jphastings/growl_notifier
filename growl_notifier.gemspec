@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{growl_notifier}
-  s.version = "1.2.0"
+  s.version = "1.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Satoshi Nakagawa", "Eloy Duran", "JP Hastings-Spital"]
-  s.date = %q{2010-08-02}
+  s.date = %q{2010-08-03}
   s.description = %q{A ruby library which allows you to send Growl notifications.}
   s.email = ["psychs@limechat.net", "e.duran@superalloy.nl", "jphastings@gmail.com"]
   s.extra_rdoc_files = [
